@@ -10,19 +10,33 @@ import ContactUs from './components/contactus/contactus';
 import SignInandSignUp from './pages/sign-in-and-sign-up/signup.component';
 import {
   auth,
-  createUserProfileDocument
+  createUserProfileDocument,
+  addCollectionAndDocuments
 } from './components/firebase/firebase.utils';
 // import { setCurrentUser } from './components/redux/user/user.actions';
 import { setCurrentUser } from './redux/user/user.actions';
 import MenuBar from './components/menu-bars/menu-bars.component';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import CheckoutPage from './pages/checkout/checkout.component';
+import ImageSlide from './components/imageSlides/imageSlides.component'
 import Footer from './components/footer/footer.component';
+import styled from 'styled-components'
+import { selectCollectionsForPreview } from './redux/shop/shop-selectors'
+import Default from './components/default';
+import Catgory from './pages/category/category';
+import login from './components/login/login';
+import PageNotFound from './components/page-not-found/pagenotfound';
+import Adspage from './pages/AdsPage/adspage';
+const slide = styled.div`
+height:20px;
+width:100%;
+
+`
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
   componentDidMount() {
-    const { setCurrentUser } = this.props;
+    const { setCurrentUser, collectionArray } = this.props;
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       // createUserProfileDocument(user);
       // console.log(user);
@@ -39,42 +53,54 @@ class App extends React.Component {
         });
       }
       setCurrentUser(userAuth);
+      addCollectionAndDocuments('collections', collectionArray.map(({ title, items }) => ({ title, items })));
     });
   }
   componentWillUnmount() {
     this.unsubscribeFromAuth();
   }
+  clickHandel = () => {
+    console.log('hello frind fuck you')
+  }
   render() {
     return (
-      <div className='App'>
+      <div>
         <Header />
         {/* <MenuBar /> */}
         <Switch>
           <Route exact path='/' component={HomePage} />
-          {/* <Route path='/contact' component={HomePage} /> */}
+          <Route exact path='/' component={ImageSlide} />
           <Route path='/shop' component={ShopPage} />
           <Route path='/contactus' component={ContactUs} />
           <Route exact path='/checkout' component={CheckoutPage} />
-
-          <Route
+          <Route exact path='/login' component={login} />
+          <Route exact path='/category' component={Catgory} />
+          <Route component={PageNotFound} /><Route
             exact
             path='/signup'
             render={() =>
-              this.props.currentUser ? <Redirect to='/' /> : <SignInandSignUp />
+              this.props.currentUser ? (
+                <Redirect to='/' />
+              ) : (
+                  <SignInandSignUp />
+                )
             }
           />
-          {/* <Route path='Partner' component={Partner} /> */}
 
-          {/* <Route path='/hatpage' component={Hatpage} />
-        <Route path='/hatpage/:id' component={Hatpage} /> */}
+
+
         </Switch>
+
+        <button onClick={this.clickHandel}>click me </button>
+        <Adspage/>
         <Footer />
       </div>
     );
   }
 }
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
+  collectionArray: selectCollectionsForPreview
 });
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))

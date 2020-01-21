@@ -9,10 +9,12 @@ import CartIcon from '../cart-icon/cart-icon.component';
 import CartDropDown from '../cart-dropdown/cart-drop.component';
 import { selectCartHidden } from '../../redux/cart/cart.selector';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
+import Search from '../search/search';
+import { FaAngleDown } from 'react-icons/fa';
 const Header = ({ currentUser, hidden }) => (
   <div className='header'>
     <Link className='logo-container' to='/'>
-      <Logo className='' />
+      <Logo className='logo' />
     </Link>
     <div className='options'>
       <Link className='option' to='/'>
@@ -21,23 +23,30 @@ const Header = ({ currentUser, hidden }) => (
       <Link className='option' to='/shop'>
         SHOP
       </Link>
+      <Link className='option'>
+        PRODUCT<FaAngleDown />
+        {/* <i className="fa fa-caret-down"></i>
+        <div class="dropdown-content">
+          <a href="#">{}</a>
+          <a href="#">Link 2</a>
+          <a href="#">Link 3</a> 
+        </div> */}
+      </Link>
       <Link className='option' to='/contactus'>
         CONTACT US
       </Link>
+
       <div className='option'>
-        ABOUT
-        <i class='fa fa-caret-down' />
-        <div class='subnav-content'>
-          <a href='#company'>Company</a>
-          <a href='#team'>Team</a>
-          <a href='#careers'>Careers</a>
-        </div>
+        ABOUT US
+        <i className='fa fa-caret-down' />
+
       </div>
+      <div className='option'><Search /></div>
 
       {currentUser ? (
         <div className='option' onClick={() => auth.signOut()}>
           SIGN OUT
-          {/* <Link>{currentUser.displayName}</Link> */}
+          <Link>{currentUser.displayName}</Link>
         </div>
       ) : (
           <Link className='option' to='/signup'>
@@ -45,8 +54,10 @@ const Header = ({ currentUser, hidden }) => (
         </Link>
         )}
       <CartIcon />
+
     </div>
     {hidden ? null : <CartDropDown />}
+    <div className='desk-topquery'></div>
   </div>
 );
 const mapStateToProps = createStructuredSelector({

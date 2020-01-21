@@ -5,7 +5,7 @@ import CustomButton from '../custom-button/custom-button.component';
 import {
   auth,
   signInWithGoogle,
-  signInWithFacebook
+  // signInWithFacebook
 } from '../firebase/firebase.utils';
 
 class SignIn extends Component {

@@ -45,8 +45,8 @@ const INITAL_STATE = {
       imageUrl:
         'https://evermotion.org/files/model_images/e3a8fdf261617a048b1886af357b1d9d.jpg',
       size: 'large',
-      id: 6,
-      linkUrl: 'shop/kids'
+      id: 7,
+      linkUrl: 'shop/electonics'
     }
   ]
 };
