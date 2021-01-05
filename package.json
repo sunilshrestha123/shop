@@ -4,7 +4,7 @@
   "homepage": "http://shop.navsolution.com.np/",
   "private": true,
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.4.1",
     "firebase": "^6.3.4",
     "node-sass": "^4.13.0",
